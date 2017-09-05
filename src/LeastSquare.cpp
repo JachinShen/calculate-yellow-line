@@ -103,7 +103,7 @@ void LeastSquare::draw( cv::Mat& src )
   /* two cases , different independent value*/
   if ( is_kxb )
   {
-    for ( int i = 0; i < src.cols; ++i )  //在原图上绘制结果
+    for ( int i = 0; i < src.cols; ++i )
     {
       int j = ( int )getY( i );
       if ( j >= 0 && j <= src.rows )
@@ -115,7 +115,7 @@ void LeastSquare::draw( cv::Mat& src )
   }
   else
   {
-    for ( int i = 0; i < src.rows; ++i )  //在原图上绘制结果
+    for ( int i = 0; i < src.rows; ++i )
     {
       data = src.ptr< uchar >( i );
       int j = ( int )getX( i );

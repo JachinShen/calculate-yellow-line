@@ -6,5 +6,5 @@ CXX_FLAGS =  -O0 -Wall -g -ggdb
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/jachinshen/Projects/Cpp/Opencv/YellowLine/include -isystem /opt/ros/lunar/include/opencv-3.2.0-dev -isystem /opt/ros/lunar/include/opencv-3.2.0-dev/opencv 
+CXX_INCLUDES = -I/usr/local/include/opencv -I/usr/local/include -I/home/jachinshen/Projects/Cpp/Opencv/YellowLine/include 
 

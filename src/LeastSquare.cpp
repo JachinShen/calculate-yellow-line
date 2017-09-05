@@ -1,10 +1,11 @@
 #include "LeastSquare.h"
 
 LeastSquare::LeastSquare( const std::vector< int >& x,
-    const std::vector< int >& y )  //构造函数，输入x，y坐标，得到斜率和截距
+    const std::vector< int >& y )
 {
-  float t1 = 0, t2 = 0, t3 = 0, t4 = 0, t5 = 0;
-  for ( int i = 0; i < ( int )x.size(); ++i )
+  float t1 = 0.0, t2 = 0.0, t3 = 0.0, t4 = 0.0, t5 = 0.0;
+  /* use formulas to calculate a,b,ah,bh */
+  for ( int i = 0; i < (int)x.size(); ++i )
   {
     t1 += x[i] * x[i];
     t2 += x[i];
@@ -18,41 +19,51 @@ LeastSquare::LeastSquare( const std::vector< int >& x,
   ah = ( t3 * x.size() - t2 * t4 ) / ( t5 * x.size() - t4 * t4 );
   bh = ( t5 * t2 - t4 * t3 ) / ( t5 * x.size() - t4 * t4 );
 
+  /* because commonly a*ah = 1 */
+  /* so choosing the small-abs one can express the line more accurately */
   is_kxb = abs( a ) < abs( ah );
 
+  /* calculate direction vector for further usage*/
   if ( is_kxb )
   {
-    tx = -1;
-    ty = -a;
+    d_vector_x = -1;
+    d_vector_y = -a;
   }
   else
   {
-    tx = -ah;
-    ty = -1;
+    d_vector_x = -ah;
+    d_vector_y = -1;
   }
-  float length = sqrt( tx * tx + ty * ty );
-  tx = tx / length;
-  ty = ty / length;
-  if ( ( -tx - ty ) < 0 )
+
+  /* normalize */
+  float length = sqrt( d_vector_x * d_vector_x + d_vector_y * d_vector_y );
+  d_vector_x = d_vector_x / length;
+  d_vector_y = d_vector_y / length;
+
+  /* let direction vector point to left-up */
+  /* by calculating the dot product with (-1, -1) */
+  /* (in image coordinate (-1, -1) point to left_up) */
+  if ( ( -d_vector_x - d_vector_y ) < 0 )
   {
-    tx = -tx;
-    ty = -ty;
+    d_vector_x = -d_vector_x;
+    d_vector_y = -d_vector_y;
   }
 }
 
-float LeastSquare::getY( const float x ) const  //计算函数值y=kx+b
+float LeastSquare::getY( const float x ) const
 {
   return a * x + b;
 }
 
-float LeastSquare::getX( const float y ) const  //计算x值 x=ah*y+bh
+float LeastSquare::getX( const float y ) const
 {
   return ah * y + bh;
 }
 
+/*
 float LeastSquare::error_plan1(
     const std::vector< int >& x,
-    const std::vector< int >& y )  // y=kx+b方程误差计算（点到直线距离平方和）
+    const std::vector< int >& y )
 {
   float error = 0.0;
   for ( int i = 0; i < ( int )x.size(); ++i )
@@ -62,9 +73,11 @@ float LeastSquare::error_plan1(
   }
   return error;
 }
+*/
 
+/*
 float LeastSquare::error_plan2( const std::vector< int >& x,
-    const std::vector< int >& y )  // x=ah*y+bh方程误差计算
+    const std::vector< int >& y )
 {
   float error = 0.0;
   for ( int i = 0; i < ( int )x.size(); ++i )
@@ -74,8 +87,9 @@ float LeastSquare::error_plan2( const std::vector< int >& x,
   }
   return error;
 }
+*/
 
-void LeastSquare::print() const  //显示直线方程
+void LeastSquare::print() const
 {
   if ( is_kxb )
     std::cout << "y = " << a << "x + " << b << "\n";
@@ -83,10 +97,11 @@ void LeastSquare::print() const  //显示直线方程
     std::cout << "x = " << ah << "y + " << bh << "\n";
 }
 
-void LeastSquare::draw( cv::Mat& src )  //绘图
+void LeastSquare::draw( cv::Mat& src )
 {
   uchar* data;
-  if ( is_kxb )  //如果是y=kx+b误差较小
+  /* two cases , different independent value*/
+  if ( is_kxb )
   {
     for ( int i = 0; i < src.cols; ++i )  //在原图上绘制结果
     {
@@ -98,7 +113,7 @@ void LeastSquare::draw( cv::Mat& src )  //绘图
       }
     }
   }
-  else  //如果是x=ah*y+bh误差较小
+  else
   {
     for ( int i = 0; i < src.rows; ++i )  //在原图上绘制结果
     {
@@ -112,17 +127,17 @@ void LeastSquare::draw( cv::Mat& src )  //绘图
   }
 }
 
-void LeastSquare::direction( float x, float y, float& distance_x,
-    float& distance_y )  //获取从点（x，y）到直线的向量
+void LeastSquare::getNormalVector( float point_x, float point_y, float& n_vector_x,
+    float& n_vector_y )
 {
   if ( is_kxb )
   {
-    distance_x = -a * ( a * x + b - y ) / ( a * a + 1 );
-    distance_y = ( a * x + b - y ) / ( a * a + 1 );
+    n_vector_x = -a * ( a * point_x + b - point_y ) / ( a * a + 1 );
+    n_vector_y = ( a * point_x + b - point_y ) / ( a * a + 1 );
   }
   else
   {
-    distance_x = -( x - bh - ah * y ) / ( ah * ah + 1 );
-    distance_y = ah * ( x - bh - ah * y ) / ( ah * ah + 1 );
+    n_vector_x = -( point_x - bh - ah * point_y ) / ( ah * ah + 1 );
+    n_vector_y = ah * ( point_x - bh - ah * point_y ) / ( ah * ah + 1 );
   }
 }

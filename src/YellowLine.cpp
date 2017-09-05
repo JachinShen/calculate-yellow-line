@@ -35,9 +35,9 @@ void getYellowRegion(cv::Mat& src, cv::Mat& dst, int H_low=30, int H_high=75, in
 int main()
 {
   const int H_low = 29;  
-  const int H_high = 29;  
-  const int S_threshold = 29;  
-  const int V_threshold = 29;  
+  const int H_high = 53;  
+  const int S_threshold = 99;  
+  const int V_threshold = 140;  
 
   cv::VideoCapture cap("../line2.avi"); 
   cv::Mat frame, yellow_region, draw_line; 
@@ -72,16 +72,15 @@ int main()
     {
       LeastSquare leastsq(yellow_points_x,yellow_points_y);
       leastsq.print();
-      leastsq.getDirection(frame.cols/2, frame.rows/2, vector_x, vector_y);
+      leastsq.getNormalVector(frame.cols/2, frame.rows/2, vector_x, vector_y);
 
       leastsq.draw(bgrSplit[1]);
       cv::line(bgrSplit[1], cv::Point(frame.cols/2, frame.rows/2),
               cv::Point(frame.cols/2+vector_x, frame.rows/2+vector_y), cv::Scalar(255));	
       cv::merge(bgrSplit, draw_line);		
-
+      cv::imshow("frame", draw_line);
+      cv::waitKey(0);
     }
-    cv::imshow("frame", draw_line);
-    cv::waitKey(0);
 
     yellow_points_x.clear(); 
     yellow_points_y.clear();

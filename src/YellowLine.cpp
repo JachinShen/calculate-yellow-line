@@ -71,10 +71,10 @@ int main()
     if(!yellow_points_x.empty())
     {
       LeastSquare leastsq(yellow_points_x,yellow_points_y);
-      leastsq.print();
+      leastsq.printEquation();
       leastsq.getNormalVector(frame.cols/2, frame.rows/2, vector_x, vector_y);
 
-      leastsq.draw(bgrSplit[1]);
+      leastsq.drawFitLine(bgrSplit[1]);
       cv::line(bgrSplit[1], cv::Point(frame.cols/2, frame.rows/2),
               cv::Point(frame.cols/2+vector_x, frame.rows/2+vector_y), cv::Scalar(255));	
       cv::merge(bgrSplit, draw_line);		

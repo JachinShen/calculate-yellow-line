@@ -6,21 +6,21 @@
  * clase name: LeastSquare
  * function: use leastsquare to fit line
  * input data: std::vector form of x and y coordinates of points to fit
- * output: print() give the equation
- *         draw(cv::Mat src) draw line on src image
- *         getX(), getY() predict point's x or y coordinate
- *         getNormalVector(...) give normal vector from a point to line
  */
 class LeastSquare{  
     private:
-    /* y=a*x+b | x=ah*y+bh */
-    /* to prevent the a or ah being infinity */
+    /* y=kx+b | x=ky+b */
+    /* to prevent the k being infinity */
     /* it will choose the more accurate expression */
-    float a, b, ah, bh;
+    float k_x, b_x, k_y, b_y;
     /* direction vector (d_vector_x, d_vector_y) */
     float d_vector_x, d_vector_y;
     /* choice is y=kx+b or x=kx+b ?*/
 	bool is_kxb;
+
+    void calculateSlopeIntercept(const std::vector<int>& x, const std::vector<int>& y);
+
+    void calculateDirectionVector();
 
     public:  
     /* use a list of x and y of the points to fit line */
@@ -34,9 +34,9 @@ class LeastSquare{
     
     //float error_plan2(const std::vector<int>& x, const std::vector<int>& y);
 
-    void print() const;
+    void printEquation() const;
     
-	void draw(cv::Mat& src);
+	void drawFitLine(cv::Mat& src);
   
     /* get normal vector from origin point(x, y) to line  */
 	void getNormalVector(float point_x, float point_y, float& n_vector_x, float& n_vector_y);

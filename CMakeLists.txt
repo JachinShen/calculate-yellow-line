@@ -11,7 +11,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 # Declare the target (an executable)
 include_directories( ${PROJECT_SOURCE_DIR}/include)
 ADD_EXECUTABLE(YellowLine  
-  src/YellowLine.cpp
+  example/YellowLine.cpp
   src/LeastSquare.cpp)
 TARGET_LINK_LIBRARIES(YellowLine ${OpenCV_LIBS})
 #MESSAGE(STATUS "OpenCV_LIBS: ${OpenCV_LIBS}")     

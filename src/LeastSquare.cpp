@@ -3,15 +3,15 @@
 LeastSquare::LeastSquare( const std::vector< int >& x,
         const std::vector< int >& y )
 {
-    calculateSlopeIntercept(x, y);
+    getSlopeIntercept(x, y);
     
-    calculateDirectionVector();
+    getDirectionVector();
 }
 
-void LeastSquare::calculateSlopeIntercept(const std::vector<int>& x, const std::vector<int>& y)
+void LeastSquare::getSlopeIntercept(const std::vector<int>& x, const std::vector<int>& y)
 {
     float t1 = 0.0, t2 = 0.0, t3 = 0.0, t4 = 0.0, t5 = 0.0;
-    /* use formulas to calculate a,b,ah,bh */
+    /* use formulas to get a,b,ah,bh */
     for ( int i = 0; i < (int)x.size(); ++i )
     {
         t1 += x[i] * x[i];
@@ -52,7 +52,7 @@ void LeastSquare::calculateSlopeIntercept(const std::vector<int>& x, const std::
 
 }
 
-void LeastSquare::calculateDirectionVector()
+void LeastSquare::getDirectionVector()
 {
     if ( is_kxb )
     {

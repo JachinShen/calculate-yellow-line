@@ -1,3 +1,7 @@
+/*
+ * demo:fit yellow line 
+ * get yellow region --> fit line --> display
+ */
 #define YELLOWLINE_DEBUG
 #include "LeastSquare.h"
 #include <opencv2/core/core.hpp>
@@ -39,7 +43,7 @@ int main()
   const int S_threshold = 99;  
   const int V_threshold = 140;  
 
-  cv::VideoCapture cap("../line2.avi"); 
+  cv::VideoCapture cap("../YellowLine.avi"); 
   cv::Mat frame, yellow_region, draw_line; 
   std::vector<cv::Mat > bgrSplit;	
   std::vector<int> yellow_points_x, yellow_points_y; 
@@ -68,6 +72,20 @@ int main()
     }
 
     /* fit line and display*/
+    /*
+     * |----------------------------------------|
+     * |                           Line         |
+     * |                            |           |
+     * |                            |           |
+     * |                            |           |
+     * |                            |           |
+     * |   Point                    |           |
+     * |    *---------------------->|           |
+     * |                            |           |
+     * |                            |           |
+     * |                                        |
+     * |----------------------------------------|
+     */
     if(!yellow_points_x.empty())
     {
       LeastSquare leastsq(yellow_points_x,yellow_points_y);

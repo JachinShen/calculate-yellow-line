@@ -18,9 +18,9 @@ class LeastSquare{
     /* choice is y=kx+b or x=kx+b ?*/
 	bool is_kxb;
 
-    void calculateSlopeIntercept(const std::vector<int>& x, const std::vector<int>& y);
+    void getSlopeIntercept(const std::vector<int>& x, const std::vector<int>& y);
 
-    void calculateDirectionVector();
+    void getDirectionVector();
 
     public:  
     /* use a list of x and y of the points to fit line */
@@ -38,6 +38,6 @@ class LeastSquare{
     
 	void drawFitLine(cv::Mat& src);
   
-    /* get normal vector from origin point(x, y) to line  */
+    /* get normal vector from point(x, y) to line  */
 	void getNormalVector(float point_x, float point_y, float& n_vector_x, float& n_vector_y);
 };

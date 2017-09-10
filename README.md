@@ -8,17 +8,12 @@ Use least square to fit yellow line in the picture.
 
 ## Usage:
 
-> cd path/to/YellowLine
-
-> mkdir build
-
-> cd build
-
-> cmake ..
-
-> make
-
-> ./YellowLine
+> cd path/to/YellowLine\
+> mkdir build\
+> cd build\
+> cmake ..\
+> make\
+> ./YellowLine\
 
 Then it will show a video with the fitted line and the vector from center point to the line drawed. And the terminal will print the equation of the line.
 
